@@ -51,7 +51,7 @@ export function DailyTasksList() {
     switch (status) {
       case 'completed':
         return (
-          <Badge variant="default" className="bg-green-500">
+          <Badge variant="default" className="bg-[var(--live)]">
             <CheckCircle className="size-3 mr-1" />
             Selesai
           </Badge>
@@ -65,7 +65,7 @@ export function DailyTasksList() {
         )
       case 'warning':
         return (
-          <Badge variant="secondary" className="bg-yellow-500">
+          <Badge variant="secondary" className="bg-[var(--warn)]">
             <Clock className="size-3 mr-1" />
             Warning
           </Badge>

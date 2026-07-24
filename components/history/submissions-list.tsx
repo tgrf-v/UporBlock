@@ -52,7 +52,7 @@ export function SubmissionsList() {
   const getStatusBadge = (submission: Submission) => {
     if (submission.is_valid) {
       return (
-        <Badge variant="default" className="bg-green-500">
+        <Badge variant="default" className="bg-[var(--live)]">
           <CheckCircle className="size-3 mr-1" />
           Valid
         </Badge>

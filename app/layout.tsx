@@ -1,15 +1,31 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Unbounded, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const inter = Inter({
+const spaceGrotesk = Space_Grotesk({
   variable: "--font-sans",
   subsets: ["latin"],
+  display: "swap",
+});
+
+const unbounded = Unbounded({
+  variable: "--font-display",
+  subsets: ["latin"],
+  weight: ["500", "700", "900"],
+  display: "swap",
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-data",
+  subsets: ["latin"],
+  weight: ["400", "600", "800"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "UporBlock - Kontrol Diri untuk Produktivitas",
-  description: "Aplikasi kontrol diri yang memblokir situs distraksi dan memaksa kamu upload video produktif",
+  title: "UporBlock — Blokir Distraksi, Upload Produktif",
+  description:
+    "Aplikasi kontrol diri yang memblokir situs distraksi dan memaksa kamu upload video produktif setelah melewati batas.",
 };
 
 export default function RootLayout({
@@ -20,9 +36,10 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${inter.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${unbounded.variable} ${jetbrainsMono.variable}`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
+      <body className="font-sans antialiased">
+        <div aria-hidden className="glow-field" />
         {children}
       </body>
     </html>

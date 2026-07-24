@@ -8,8 +8,10 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);
-  --font-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
-  --font-heading: var(--font-sans);
+  --font-mono: var(--font-data);
+  --font-data: var(--font-data);
+  --font-display: var(--font-display);
+  --font-heading: var(--font-display);
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -39,6 +41,12 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+  --color-signal: var(--signal);
+  --color-live: var(--live);
+  --color-warn: var(--warn);
+  --color-alarm: var(--alarm);
+  --color-sky: var(--sky);
+  --color-ink: var(--ink);
   --radius-sm: calc(var(--radius) * 0.6);
   --radius-md: calc(var(--radius) * 0.8);
   --radius-lg: var(--radius);
@@ -49,82 +57,233 @@
 }
 
 :root {
-  --background: oklch(0.985 0.002 155);
-  --foreground: oklch(0.18 0.02 160);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.02 160);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.02 160);
-  --primary: oklch(0.55 0.15 155);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.94 0.03 155);
-  --secondary-foreground: oklch(0.25 0.08 155);
-  --muted: oklch(0.95 0.015 155);
-  --muted-foreground: oklch(0.5 0.03 155);
-  --accent: oklch(0.92 0.04 155);
-  --accent-foreground: oklch(0.2 0.06 155);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.88 0.025 155);
-  --input: oklch(0.88 0.025 155);
-  --ring: oklch(0.55 0.15 155);
-  --chart-1: oklch(0.55 0.15 155);
-  --chart-2: oklch(0.6 0.12 160);
-  --chart-3: oklch(0.5 0.1 150);
-  --chart-4: oklch(0.65 0.1 165);
-  --chart-5: oklch(0.45 0.08 145);
+  /* ===== UporBlock — Studio Lockout (dark) ===== */
+  --background: oklch(0.155 0.02 250);
+  --foreground: oklch(0.93 0.012 240);
+
+  --card: oklch(0.19 0.024 250);
+  --card-foreground: oklch(0.93 0.012 240);
+  --popover: oklch(0.19 0.024 250);
+  --popover-foreground: oklch(0.93 0.012 240);
+
+  /* primary = signal orange */
+  --primary: oklch(0.70 0.185 35);
+  --primary-foreground: oklch(0.14 0.03 40);
+
+  --secondary: oklch(0.24 0.028 250);
+  --secondary-foreground: oklch(0.9 0.012 240);
+  --muted: oklch(0.225 0.024 250);
+  --muted-foreground: oklch(0.67 0.03 245);
+  --accent: oklch(0.27 0.035 250);
+  --accent-foreground: oklch(0.92 0.012 240);
+
+  --destructive: oklch(0.64 0.21 25);
+  --border: oklch(0.31 0.03 250);
+  --input: oklch(0.31 0.03 250);
+  --ring: oklch(0.70 0.185 35);
+
+  /* status palette */
+  --signal: oklch(0.70 0.185 35);
+  --live: oklch(0.80 0.17 155);
+  --warn: oklch(0.85 0.155 90);
+  --alarm: oklch(0.64 0.21 25);
+  --sky: oklch(0.75 0.115 230);
+  --ink: oklch(0.13 0.02 250);
+
+  --chart-1: oklch(0.70 0.185 35);
+  --chart-2: oklch(0.80 0.17 155);
+  --chart-3: oklch(0.85 0.155 90);
+  --chart-4: oklch(0.75 0.115 230);
+  --chart-5: oklch(0.64 0.21 25);
+
   --radius: 0.625rem;
-  --sidebar: oklch(0.985 0.002 155);
-  --sidebar-foreground: oklch(0.18 0.02 160);
-  --sidebar-primary: oklch(0.55 0.15 155);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.94 0.03 155);
-  --sidebar-accent-foreground: oklch(0.25 0.08 155);
-  --sidebar-border: oklch(0.88 0.025 155);
-  --sidebar-ring: oklch(0.55 0.15 155);
+
+  --sidebar: oklch(0.17 0.022 250);
+  --sidebar-foreground: oklch(0.93 0.012 240);
+  --sidebar-primary: oklch(0.70 0.185 35);
+  --sidebar-primary-foreground: oklch(0.14 0.03 40);
+  --sidebar-accent: oklch(0.24 0.028 250);
+  --sidebar-accent-foreground: oklch(0.9 0.012 240);
+  --sidebar-border: oklch(0.31 0.03 250);
+  --sidebar-ring: oklch(0.70 0.185 35);
+
+  /* font fallbacks (di-set asli oleh next/font di layout) */
+  --font-sans: "Space Grotesk", system-ui, sans-serif;
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-data: "JetBrains Mono", ui-monospace, monospace;
 }
 
 .dark {
-  --background: oklch(0.15 0.02 160);
-  --foreground: oklch(0.95 0.01 155);
-  --card: oklch(0.2 0.025 160);
-  --card-foreground: oklch(0.95 0.01 155);
-  --popover: oklch(0.2 0.025 160);
-  --popover-foreground: oklch(0.95 0.01 155);
-  --primary: oklch(0.65 0.15 155);
-  --primary-foreground: oklch(0.15 0.02 160);
-  --secondary: oklch(0.25 0.03 155);
-  --secondary-foreground: oklch(0.9 0.02 155);
-  --muted: oklch(0.25 0.025 155);
-  --muted-foreground: oklch(0.65 0.04 155);
-  --accent: oklch(0.28 0.04 155);
-  --accent-foreground: oklch(0.9 0.02 155);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(0.3 0.03 155);
-  --input: oklch(0.3 0.03 155);
-  --ring: oklch(0.6 0.12 155);
-  --chart-1: oklch(0.65 0.15 155);
-  --chart-2: oklch(0.7 0.12 160);
-  --chart-3: oklch(0.6 0.1 150);
-  --chart-4: oklch(0.75 0.1 165);
-  --chart-5: oklch(0.55 0.08 145);
-  --sidebar: oklch(0.18 0.025 160);
-  --sidebar-foreground: oklch(0.95 0.01 155);
-  --sidebar-primary: oklch(0.65 0.15 155);
-  --sidebar-primary-foreground: oklch(0.95 0.01 155);
-  --sidebar-accent: oklch(0.25 0.03 155);
-  --sidebar-accent-foreground: oklch(0.9 0.02 155);
-  --sidebar-border: oklch(0.3 0.03 155);
-  --sidebar-ring: oklch(0.6 0.12 155);
+  --background: oklch(0.155 0.02 250);
+  --foreground: oklch(0.93 0.012 240);
+  --card: oklch(0.19 0.024 250);
+  --card-foreground: oklch(0.93 0.012 240);
+  --popover: oklch(0.19 0.024 250);
+  --popover-foreground: oklch(0.93 0.012 240);
+  --primary: oklch(0.70 0.185 35);
+  --primary-foreground: oklch(0.14 0.03 40);
+  --secondary: oklch(0.24 0.028 250);
+  --secondary-foreground: oklch(0.9 0.012 240);
+  --muted: oklch(0.225 0.024 250);
+  --muted-foreground: oklch(0.67 0.03 245);
+  --accent: oklch(0.27 0.035 250);
+  --accent-foreground: oklch(0.92 0.012 240);
+  --destructive: oklch(0.64 0.21 25);
+  --border: oklch(0.31 0.03 250);
+  --input: oklch(0.31 0.03 250);
+  --ring: oklch(0.70 0.185 35);
+  --chart-1: oklch(0.70 0.185 35);
+  --chart-2: oklch(0.80 0.17 155);
+  --chart-3: oklch(0.85 0.155 90);
+  --chart-4: oklch(0.75 0.115 230);
+  --chart-5: oklch(0.64 0.21 25);
+  --sidebar: oklch(0.17 0.022 250);
+  --sidebar-foreground: oklch(0.93 0.012 240);
+  --sidebar-primary: oklch(0.70 0.185 35);
+  --sidebar-primary-foreground: oklch(0.14 0.03 40);
+  --sidebar-accent: oklch(0.24 0.028 250);
+  --sidebar-accent-foreground: oklch(0.9 0.012 240);
+  --sidebar-border: oklch(0.31 0.03 250);
+  --sidebar-ring: oklch(0.70 0.185 35);
 }
 
 @layer base {
   * {
     @apply border-border outline-ring/50;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
     @apply font-sans;
+  }
+  body {
+    @apply bg-background text-foreground;
+    background-image:
+      linear-gradient(color-mix(in oklab, var(--foreground) 3.5%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in oklab, var(--foreground) 3.5%, transparent) 1px, transparent 1px),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    background-size: 44px 44px, 44px 44px, 180px 180px;
+    background-attachment: fixed;
+  }
+  ::selection {
+    background: var(--signal);
+    color: var(--ink);
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 8px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--muted-foreground);
+  }
+}
+
+@layer components {
+  /* ===== Ambient glow field (dipakai di layout) ===== */
+  .glow-field {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background:
+      radial-gradient(1000px 560px at 88% -12%, color-mix(in oklab, var(--signal) 14%, transparent), transparent 62%),
+      radial-gradient(820px 520px at -12% 108%, color-mix(in oklab, var(--live) 9%, transparent), transparent 60%),
+      radial-gradient(640px 420px at 55% 118%, color-mix(in oklab, var(--sky) 6%, transparent), transparent 60%);
+    animation: glow-breathe 9s ease-in-out infinite alternate;
+  }
+  @keyframes glow-breathe {
+    from { opacity: 0.7; }
+    to { opacity: 1; }
+  }
+
+  /* ===== Tipografi ===== */
+  .display-xl {
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 1.04;
+    letter-spacing: -0.01em;
+  }
+  .kicker {
+    font-family: var(--font-data);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+  .stat-number {
+    font-family: var(--font-data);
+    font-weight: 800;
+    font-size: clamp(3rem, 7vw, 5.25rem);
+    line-height: 0.95;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== Status hidup ===== */
+  .dot-live {
+    position: relative;
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 999px;
+    background: var(--live);
+    flex-shrink: 0;
+  }
+  .dot-live::after {
+    content: "";
+    position: absolute;
+    inset: -4px;
+    border-radius: 999px;
+    border: 2px solid var(--live);
+    animation: pulse-ring 1.8s ease-out infinite;
+  }
+  .dot-alarm { background: var(--alarm); }
+  .dot-alarm::after { border-color: var(--alarm); }
+  .dot-warn { background: var(--warn); }
+  .dot-warn::after { border-color: var(--warn); }
+  @keyframes pulse-ring {
+    0% { transform: scale(0.45); opacity: 0.8; }
+    80%, 100% { transform: scale(1.6); opacity: 0; }
+  }
+
+  /* ===== Stempel "SELESAI" ===== */
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    font-family: var(--font-display);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    color: var(--live);
+    border: 3px solid currentColor;
+    border-radius: 0.5rem;
+    padding: 0.4rem 1rem;
+    transform: rotate(-4deg);
+    animation: stamp-in 0.4s cubic-bezier(0.2, 1.6, 0.4, 1) both;
+  }
+  @keyframes stamp-in {
+    from { transform: rotate(-4deg) scale(2.4); opacity: 0; }
+    to { transform: rotate(-4deg) scale(1); opacity: 1; }
+  }
+
+  /* ===== Garis hazard (layar blokir / banner) ===== */
+  .hazard {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      color-mix(in oklab, var(--alarm) 16%, transparent) 0 26px,
+      transparent 26px 52px
+    );
+  }
+  .hazard-strong {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      #170b0d 0 28px,
+      var(--alarm) 28px 56px
+    );
   }
 }

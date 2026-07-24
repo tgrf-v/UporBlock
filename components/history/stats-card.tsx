@@ -66,13 +66,13 @@ export function StatsCard({ stats }: { stats: Stats }) {
             icon={CheckCircle}
             label="Selesai"
             value={`${stats.completed_days} (${stats.completion_rate}%)`}
-            color="bg-green-100 text-green-700"
+            color="bg-[var(--live)]/20 text-[var(--live)]"
           />
           <StatItem
             icon={XCircle}
             label="Blocked"
             value={stats.blocked_days}
-            color="bg-red-100 text-red-700"
+            color="bg-[var(--alarm)]/20 text-[var(--alarm)]"
           />
           <StatItem
             icon={Clock}
@@ -88,13 +88,13 @@ export function StatsCard({ stats }: { stats: Stats }) {
             icon={Flame}
             label="Streak Saat Ini"
             value={`${stats.current_streak} hari`}
-            color="bg-orange-100 text-orange-700"
+            color="bg-[var(--signal)]/20 text-[var(--signal)]"
           />
           <StatItem
             icon={Flame}
             label="Best Streak"
             value={`${stats.best_streak} hari`}
-            color="bg-yellow-100 text-yellow-700"
+            color="bg-[var(--warn)]/20 text-[var(--warn)]"
           />
           <StatItem
             icon={Video}
@@ -105,7 +105,7 @@ export function StatsCard({ stats }: { stats: Stats }) {
             icon={CheckCircle}
             label="Video Valid"
             value={stats.valid_submissions}
-            color="bg-green-100 text-green-700"
+            color="bg-[var(--live)]/20 text-[var(--live)]"
           />
         </div>
       </CardContent>

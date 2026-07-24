@@ -33,7 +33,7 @@ export default async function DashboardPage() {
   const getStatusBadge = (status: string) => {
     switch (status) {
       case 'completed':
-        return <Badge variant="default" className="bg-green-500">Completed</Badge>
+        return <Badge variant="default" className="bg-[var(--live)]">Completed</Badge>
       case 'blocked':
         return <Badge variant="destructive">Blocked</Badge>
       case 'warning':

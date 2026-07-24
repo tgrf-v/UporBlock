@@ -24,7 +24,7 @@ export function Sidebar({ email }: SidebarProps) {
   return (
     <aside className="hidden lg:flex lg:flex-col lg:w-60 lg:border-r bg-card">
       <div className="flex items-center gap-2 px-6 py-5 border-b">
-        <div className="size-8 rounded-md bg-emerald-600 flex items-center justify-center">
+        <div className="size-8 rounded-md bg-primary flex items-center justify-center">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="size-5 text-white">
             <path strokeLinecap="round" strokeLinejoin="round" d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244" />
           </svg>
@@ -42,7 +42,7 @@ export function Sidebar({ email }: SidebarProps) {
               className={cn(
                 'flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors',
                 isActive
-                  ? 'bg-emerald-50 text-emerald-700'
+                  ? 'bg-accent text-accent-foreground'
                   : 'text-muted-foreground hover:bg-muted hover:text-foreground'
               )}
             >
