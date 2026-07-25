@@ -15,9 +15,8 @@ const tickerItems = [
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
-      <div aria-hidden className="top-stripe" />
-
-      <header className="border-b border-border/60">
+      <header className="sticky top-0 z-50 border-b border-border/60 bg-background/80 backdrop-blur-md">
+        <div aria-hidden className="top-stripe" />
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <div className="flex items-center gap-2.5">
             <span className="grid size-9 place-items-center rounded-md bg-signal font-display text-base font-black text-ink">
