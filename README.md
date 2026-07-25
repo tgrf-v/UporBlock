@@ -1,36 +1,125 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# UporBlock
+
+Sistem pemblokiran gangguan digital — browser extension + web dashboard + Supabase backend.
+
+Blokir situs yang mengganggu setelah batas waktu tertentu. Unggah video YouTube produktif untuk membuka kembali akses.
+
+## Tech Stack
+
+- **Frontend:** Next.js 16 (App Router), React 19, TypeScript, Tailwind CSS v4
+- **UI:** shadcn/ui, Space Grotesk + Unbounded + JetBrains Mono
+- **Backend:** Supabase (PostgreSQL, RLS, Auth)
+- **Extension:** Chrome/Edge Extension (Manifest V3)
+- **Video:** YouTube Data API v3
+
+## Features
+
+- Blokir situs berdasarkan domain, wildcard, atau regex
+- Deteksi waktu aktif / idle secara real-time
+- Threshold gangguan yang bisa dikonfigurasi
+- Mode blokir: reminder atau blokir penuh
+- Unggah video YouTube produktif untuk membuka blokir
+- Verifikasi otomatis via YouTube Data API
+- Statistik harian, streak, dan riwayat lengkap
+- Pairing extension via kode 6 karakter
+- Dark mode "Studio Lockout" dengan tema oranye
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- Akun Supabase (gratis)
+- YouTube Data API v3 key
+
+### Install
+
+```bash
+git clone https://github.com/tgrf-v/UporBlock.git
+cd UporBlock
+npm install
+```
+
+### Environment Variables
+
+Copy `.env.local.example` ke `.env.local` dan isi:
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://xxx.supabase.co
+NEXT_PUBLIC_SUPABASE_ANON_KEY=eyJhbGci...
+SUPABASE_SERVICE_ROLE_KEY=eyJhbGci...
+YOUTUBE_API_KEY=AIzaSy...
+```
+
+### Database
+
+Buka Supabase SQL Editor dan jalankan isi `supabase/migrations/0001_init.sql`.
+
+### Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Buka [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Load Extension
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+1. Buka `chrome://extensions/`
+2. Aktifkan Developer mode
+3. Klik "Load unpacked" → pilih folder `extension/`
 
-## Learn More
+## Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+UporBlock/
+├── app/                     # Next.js App Router
+│   ├── (app)/               # Protected routes (sidebar layout)
+│   │   ├── dashboard/       # Dashboard utama
+│   │   ├── settings/        # Pengaturan
+│   │   ├── sites/           # Blokir situs & allowlist
+│   │   ├── submit/          # Kirim video YouTube
+│   │   ├── history/         # Riwayat & statistik
+│   │   └── connect-extension/ # Pairing extension
+│   ├── (auth)/              # Login
+│   └── api/                 # API routes
+│       └── extension/       # Extension token-auth routes
+├── components/              # React components
+│   ├── forms/               # Form components
+│   ├── history/             # Stats & history components
+│   ├── layout/              # Sidebar, mobile nav
+│   └── ui/                  # shadcn/ui primitives
+├── extension/               # Chrome Extension (plain JS)
+│   ├── background.js        # Service worker
+│   ├── popup.html/js        # Extension popup
+│   ├── blocked.html/js      # Blocked page
+│   └── lib/                 # Extension helpers
+├── lib/                     # Shared utilities
+│   ├── supabase/            # Supabase clients
+│   └── youtube.ts           # YouTube API helpers
+└── supabase/
+    └── migrations/          # Database schema
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Commands
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm run dev      # Dev server
+npm run build    # Production build
+npm run start    # Production server
+npm run lint     # ESLint
+```
 
-## Deploy on Vercel
+## Architecture
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+[Chrome Extension] <--token auth--> [Next.js API Routes] <--Supabase JS--> [Supabase/PostgreSQL]
+                                          |
+                                    [YouTube Data API]
+                                          |
+                                    [Web Dashboard (React)]
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## License
+
+Private
