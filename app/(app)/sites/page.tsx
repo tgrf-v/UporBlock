@@ -13,17 +13,18 @@ export default async function SitesPage() {
 
   if (!user) redirect("/login");
 
-  const { data: sites } = await supabase
-    .from("blocked_sites")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("priority", { ascending: true });
-
-  const { data: allowlists } = await supabase
-    .from("upload_allowlists")
-    .select("*")
-    .eq("user_id", user.id)
-    .order("priority", { ascending: true });
+  const [{ data: sites }, { data: allowlists }] = await Promise.all([
+    supabase
+      .from("blocked_sites")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("priority", { ascending: true }),
+    supabase
+      .from("upload_allowlists")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("priority", { ascending: true }),
+  ]);
 
   return (
     <>

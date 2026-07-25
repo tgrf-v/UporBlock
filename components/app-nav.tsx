@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -22,17 +21,10 @@ const links = [
   { href: "/settings", label: "Pengaturan", icon: Settings },
 ];
 
-export function AppNav() {
+export function AppNav({ email }: { email?: string }) {
   const pathname = usePathname();
   const router = useRouter();
   const supabase = createClient();
-  const [email, setEmail] = useState<string | null>(null);
-
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user?.email) setEmail(data.user.email);
-    });
-  }, [supabase]);
 
   async function logout() {
     await supabase.auth.signOut();

@@ -5,6 +5,8 @@ import { DailyTasksList } from "@/components/history/daily-tasks-list";
 import { SubmissionsList } from "@/components/history/submissions-list";
 import { Flame } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function HistoryPage() {
   const supabase = await createClient();
   const {
@@ -13,17 +15,18 @@ export default async function HistoryPage() {
 
   if (!user) redirect("/login");
 
-  const { data: tasks } = await supabase
-    .from("daily_tasks")
-    .select("task_date, status, distraction_seconds, completed_at")
-    .eq("user_id", user.id)
-    .order("task_date", { ascending: false });
-
-  const { data: submissions } = await supabase
-    .from("video_submissions")
-    .select("id, created_at, is_valid")
-    .eq("user_id", user.id)
-    .order("created_at", { ascending: false });
+  const [{ data: tasks }, { data: submissions }] = await Promise.all([
+    supabase
+      .from("daily_tasks")
+      .select("task_date, status, distraction_seconds, completed_at")
+      .eq("user_id", user.id)
+      .order("task_date", { ascending: false }),
+    supabase
+      .from("video_submissions")
+      .select("id, created_at, is_valid")
+      .eq("user_id", user.id)
+      .order("created_at", { ascending: false }),
+  ]);
 
   const allTasks = tasks || [];
   const totalDays = allTasks.length;

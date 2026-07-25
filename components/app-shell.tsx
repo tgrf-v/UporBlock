@@ -1,14 +1,16 @@
 import { AppNav } from "@/components/app-nav";
 
 export function AppShell({
+  email,
   children,
 }: {
+  email?: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="flex min-h-screen flex-col">
       <div aria-hidden className="top-stripe" />
-      <AppNav />
+      <AppNav email={email} />
       <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
         {children}
       </main>

@@ -6,25 +6,28 @@ import Link from "next/link";
 
 const SEGMENTS = 28;
 
+export const dynamic = "force-dynamic";
+
 export default async function DashboardPage() {
   const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: task } = await supabase
-    .from("daily_tasks")
-    .select("*")
-    .eq("user_id", user!.id)
-    .order("task_date", { ascending: false })
-    .limit(1)
-    .single();
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user!.id)
-    .single();
+  const [{ data: task }, { data: profile }] = await Promise.all([
+    supabase
+      .from("daily_tasks")
+      .select("*")
+      .eq("user_id", user!.id)
+      .order("task_date", { ascending: false })
+      .limit(1)
+      .single(),
+    supabase
+      .from("profiles")
+      .select("*")
+      .eq("id", user!.id)
+      .single(),
+  ]);
 
   const thresholdMinutes = profile?.distraction_threshold_minutes || 30;
   const thresholdSeconds = thresholdMinutes * 60;

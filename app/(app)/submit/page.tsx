@@ -3,6 +3,8 @@ import { redirect } from "next/navigation";
 import { SubmitVideoForm } from "@/components/forms/submit-video-form";
 import { ArrowRight } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function SubmitPage() {
   const supabase = await createClient();
   const {
