@@ -23,9 +23,9 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UporBlock — Blokir Distraksi, Upload Produktif",
+  title: "UporBlock — Distraksi Dikunci, Karya Dibuka",
   description:
-    "Aplikasi kontrol diri yang memblokir situs distraksi dan memaksa kamu upload video produktif setelah melewati batas.",
+    "Sistem kontrol diri yang memblokir situs distraksi dan hanya terbuka setelah kamu upload video produktif.",
 };
 
 export default function RootLayout({
