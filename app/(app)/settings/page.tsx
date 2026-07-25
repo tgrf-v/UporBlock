@@ -1,72 +1,73 @@
-import { createClient } from '@/lib/supabase/server'
-import { redirect } from 'next/navigation'
-import { SettingsForm } from '@/components/forms/settings-form'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
-import { Separator } from '@/components/ui/separator'
-import { Shield, Clock } from 'lucide-react'
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import { SettingsForm } from "@/components/forms/settings-form";
+import { AppShell } from "@/components/app-shell";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Clock, Shield } from "lucide-react";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
-  const supabase = await createClient()
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
-  const { data: { user } } = await supabase.auth.getUser()
-
-  if (!user) {
-    redirect('/login')
-  }
+  if (!user) redirect("/login");
 
   const { data: profile } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('id', user.id)
-    .single()
+    .from("profiles")
+    .select("*")
+    .eq("id", user.id)
+    .single();
 
-  if (!profile) {
-    redirect('/dashboard')
-  }
+  if (!profile) redirect("/dashboard");
 
   return (
-    <div className="p-6">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold">Pengaturan</h1>
-        <div className="flex items-center gap-2 text-muted-foreground mt-1">
-          <Clock className="size-4" />
-          <span className="text-sm">
-            Reset harian: {profile.daily_reset_time} ({profile.timezone})
-          </span>
+    <AppShell email={user.email}>
+      <div className="mb-8">
+        <p className="kicker">{"// konfigurasi mesin"}</p>
+        <h1 className="display-xl mt-2 text-4xl sm:text-5xl">PENGATURAN</h1>
+        <div className="mt-4 inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 font-data text-xs text-muted-foreground">
+          <Clock className="size-4 text-signal" />
+          Reset harian: {profile.daily_reset_time} ({profile.timezone})
         </div>
       </div>
 
-      <div className="max-w-2xl space-y-6">
+      <div className="grid gap-6 lg:grid-cols-[1fr_360px]">
         <SettingsForm profile={profile} />
 
-        <Separator />
-
-        <Card>
+        <Card className="h-fit">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Shield className="size-5" />
+            <CardTitle className="flex items-center gap-2.5">
+              <span className="grid size-9 place-items-center rounded-md bg-signal/10">
+                <Shield className="size-5 text-signal" />
+              </span>
               Info Blocking
             </CardTitle>
-            <CardDescription>Cara kerja blocking</CardDescription>
+            <CardDescription>Cara kerja mesinmu</CardDescription>
           </CardHeader>
-          <CardContent className="text-sm text-muted-foreground space-y-2">
-            <p>
-              <strong>Block Mode:</strong>{' '}
-              {profile.block_mode === 'block_after_threshold'
-                ? 'Situs akan diblokir setelah threshold tercapai'
-                : 'Hanya menampilkan reminder, tidak memblokir'}
-            </p>
-            <p>
-              <strong>Threshold:</strong> {profile.distraction_threshold_minutes} menit waktu aktif di situs distraksi
-            </p>
-            <p>
-              <strong>Upload Validity:</strong> {profile.upload_validity_hours} jam setelah upload
-            </p>
+          <CardContent className="space-y-4 text-sm">
+            {[
+              [
+                "Block Mode",
+                profile.block_mode === "block_after_threshold"
+                  ? "Situs diblokir setelah threshold tercapai"
+                  : "Hanya reminder, tidak memblokir",
+              ],
+              ["Threshold", `${profile.distraction_threshold_minutes} menit di situs distraksi`],
+              ["Upload Validity", `${profile.upload_validity_hours} jam setelah upload`],
+            ].map(([label, value]) => (
+              <div key={label} className="border-t border-border pt-3 first:border-0 first:pt-0">
+                <p className="font-data text-[11px] uppercase tracking-[0.15em] text-muted-foreground">
+                  {label}
+                </p>
+                <p className="mt-1 text-foreground">{value}</p>
+              </div>
+            ))}
           </CardContent>
         </Card>
       </div>
-    </div>
-  )
+    </AppShell>
+  );
 }

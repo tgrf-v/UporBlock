@@ -1,341 +1,282 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>UporBlock - Waktunya Upload</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>UporBlock — Akses Ditangguhkan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;600;800&display=swap"
+    rel="stylesheet"
+  />
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #0c1116;
+      --card: #141b22;
+      --line: #232d37;
+      --text: #e9eef3;
+      --muted: #8b98a5;
+      --signal: #ff6b2c;
+      --live: #2fe38b;
+      --alarm: #ff4747;
+      --ink: #14100c;
     }
-
+    * { box-sizing: border-box; margin: 0; }
     body {
       min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: linear-gradient(135deg, #065f46 0%, #047857 50%, #059669 100%);
-      color: white;
-      padding: 24px;
+      flex-direction: column;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      background-color: var(--bg);
+      background-image:
+        radial-gradient(900px 500px at 50% -10%, rgba(255, 71, 71, 0.12), transparent 60%),
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: auto, 44px 44px, 44px 44px;
+      color: var(--text);
     }
-
-    .card {
-      background: white;
-      color: #1a1a1a;
-      border-radius: 16px;
-      padding: 40px;
-      max-width: 480px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-      animation: slideUp 0.4s ease-out;
+    .hazard {
+      height: 18px;
+      flex-shrink: 0;
+      background: repeating-linear-gradient(-45deg, #170b0d 0 28px, var(--alarm) 28px 56px);
     }
-
-    @keyframes slideUp {
-      from {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .icon {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 24px;
-      background: #fee2e2;
-      border-radius: 50%;
+    main {
+      flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      animation: pulse 2s infinite;
+      padding: 40px 20px;
     }
-
-    @keyframes pulse {
-      0%, 100% {
-        transform: scale(1);
-      }
-      50% {
-        transform: scale(1.05);
-      }
+    .panel {
+      width: 100%;
+      max-width: 640px;
+      text-align: center;
     }
-
-    .icon svg {
-      width: 36px;
-      height: 36px;
-      color: #dc2626;
+    .kicker {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 12px;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--alarm);
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid rgba(255, 71, 71, 0.4);
+      background: rgba(255, 71, 71, 0.08);
+      border-radius: 999px;
+      padding: 8px 18px;
     }
-
+    .dot {
+      width: 9px; height: 9px; border-radius: 50%;
+      background: var(--alarm);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse { 50% { opacity: 0.25; } }
     h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: #111827;
+      font-family: "Unbounded", sans-serif;
+      font-weight: 900;
+      font-size: clamp(44px, 9vw, 84px);
+      line-height: 1.02;
+      margin: 28px 0 16px;
     }
-
-    .subtitle {
-      font-size: 15px;
-      color: #6b7280;
-      margin-bottom: 24px;
-      line-height: 1.5;
-    }
-
+    h1 span { color: var(--signal); }
+    .sub { color: var(--muted); font-size: 17px; max-width: 460px; margin: 0 auto; }
     .stats {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin-bottom: 24px;
-    }
-
-    .stat-card {
-      background: #f9fafb;
-      border-radius: 12px;
-      padding: 16px;
-      border: 1px solid #e5e7eb;
-    }
-
-    .stat-label {
-      font-size: 12px;
-      color: #6b7280;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .stat-value {
-      font-size: 24px;
-      font-weight: 600;
-      color: #111827;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .stat-value.danger {
-      color: #dc2626;
-    }
-
-    .progress-container {
-      margin-bottom: 24px;
-    }
-
-    .progress-header {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 8px;
-      font-size: 12px;
-      color: #6b7280;
-    }
-
-    .progress-bar {
-      height: 8px;
-      background: #e5e7eb;
-      border-radius: 4px;
-      overflow: hidden;
-    }
-
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, #059669, #10b981);
-      transition: width 0.5s ease;
-      border-radius: 4px;
-    }
-
-    .progress-fill.warning {
-      background: linear-gradient(90deg, #d97706, #f59e0b);
-    }
-
-    .progress-fill.danger {
-      background: linear-gradient(90deg, #dc2626, #ef4444);
-      animation: progressPulse 1s infinite;
-    }
-
-    @keyframes progressPulse {
-      0%, 100% {
-        opacity: 1;
-      }
-      50% {
-        opacity: 0.7;
-      }
-    }
-
-    .message {
-      background: #fef3c7;
-      border: 1px solid #fcd34d;
-      border-radius: 12px;
-      padding: 16px;
-      margin-bottom: 24px;
-      font-size: 14px;
-      color: #92400e;
-      line-height: 1.5;
-    }
-
-    .message strong {
-      display: block;
-      margin-bottom: 4px;
-      color: #78350f;
-    }
-
-    .actions {
-      display: flex;
-      flex-direction: column;
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
+      margin: 36px 0 20px;
     }
-
-    .btn {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      padding: 14px 16px;
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 500;
+    .stat {
+      border: 1px solid var(--line);
+      background: var(--card);
+      border-radius: 12px;
+      padding: 18px 12px;
+    }
+    .stat b {
+      display: block;
+      font-family: "JetBrains Mono", monospace;
+      font-size: clamp(22px, 4vw, 32px);
+      font-weight: 800;
+    }
+    .stat small {
+      font-family: "JetBrains Mono", monospace;
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .bar {
+      height: 12px;
+      border-radius: 999px;
+      background: var(--line);
+      overflow: hidden;
+      margin-bottom: 32px;
+    }
+    .bar i {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--alarm), var(--signal));
+      transition: width 0.6s ease;
+    }
+    .actions { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
+    a.btn {
+      font-weight: 700;
       text-decoration: none;
-      transition: all 0.2s ease;
-      cursor: pointer;
-      border: none;
+      padding: 14px 26px;
+      border-radius: 10px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
     }
-
+    a.btn:hover { transform: translateY(-2px); }
     .btn-primary {
-      background: #059669;
-      color: white;
+      background: var(--signal);
+      color: var(--ink);
+      animation: ring 1.8s ease-in-out infinite;
     }
-
-    .btn-primary:hover {
-      background: #047857;
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+    @keyframes ring {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 44, 0.45); }
+      50% { box-shadow: 0 0 0 14px rgba(255, 107, 44, 0); }
     }
-
-    .btn-outline {
-      background: transparent;
-      border: 1px solid #e5e7eb;
-      color: #374151;
+    .btn-ghost {
+      border: 1px solid var(--line);
+      color: var(--text);
     }
-
-    .btn-outline:hover {
-      background: #f9fafb;
-      border-color: #d1d5db;
+    .note {
+      margin-top: 28px;
+      font-family: "JetBrains Mono", monospace;
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
     }
-
-    .btn svg {
-      width: 18px;
-      height: 18px;
+    #done { display: none; }
+    body.completed #locked { display: none; }
+    body.completed #done { display: block; }
+    .stamp {
+      display: inline-block;
+      font-family: "Unbounded", sans-serif;
+      font-weight: 900;
+      color: var(--live);
+      border: 4px solid var(--live);
+      border-radius: 12px;
+      padding: 12px 28px;
+      transform: rotate(-4deg);
+      font-size: clamp(28px, 5vw, 44px);
+      animation: stamp-in 0.4s cubic-bezier(0.2, 1.6, 0.4, 1) both;
     }
-
-    .footer {
-      margin-top: 24px;
-      padding-top: 16px;
-      border-top: 1px solid #e5e7eb;
-      font-size: 12px;
-      color: #9ca3af;
+    @keyframes stamp-in {
+      from { transform: rotate(-4deg) scale(2.2); opacity: 0; }
+      to { transform: rotate(-4deg) scale(1); opacity: 1; }
     }
-
-    .completed-view {
-      display: none;
-      text-align: center;
-    }
-
-    .completed-view .icon {
-      background: #d1fae5;
-      animation: none;
-    }
-
-    .completed-view .icon svg {
-      color: #059669;
-    }
-
-    .completed-view h1 {
-      color: #059669;
-    }
-
-    .completed-view .subtitle {
-      color: #065f46;
-    }
+    #done .sub { margin-top: 20px; }
+    #done .actions { margin-top: 28px; }
+    .btn-live { background: var(--live); color: #07130c; }
   </style>
 </head>
 <body>
-  <div class="card">
-    <!-- Blocked State -->
-    <div id="blocked-view">
-      <div class="icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636" />
-        </svg>
-      </div>
+  <div class="hazard"></div>
 
-      <h1>Waktunya Upload</h1>
-      <p class="subtitle">Kamu sudah melewati batas distraksi hari ini.<br>Saatnya upload video produktif!</p>
+  <main>
+    <div class="panel" id="locked">
+      <span class="kicker"><span class="dot"></span> akses ditangguhkan</span>
+      <h1>WAKTUNYA<br /><span>UPLOAD.</span></h1>
+      <p class="sub">
+        Kamu sudah melewati batas distraksi hari ini. Setor satu video
+        produktif untuk membuka kembali semuanya.
+      </p>
 
       <div class="stats">
-        <div class="stat-card">
-          <div class="stat-label">Distraksi</div>
-          <div id="distraction-time" class="stat-value danger">0m 0s</div>
+        <div class="stat">
+          <b id="stat-distraksi">0m 00s</b>
+          <small>distraksi</small>
         </div>
-        <div class="stat-card">
-          <div class="stat-label">Threshold</div>
-          <div id="threshold" class="stat-value">30m</div>
+        <div class="stat">
+          <b id="stat-threshold">30m</b>
+          <small>threshold</small>
         </div>
-      </div>
-
-      <div class="progress-container">
-        <div class="progress-header">
-          <span>Progress Distraksi</span>
-          <span id="progress-percent">0%</span>
-        </div>
-        <div class="progress-bar">
-          <div id="progress-fill" class="progress-fill" style="width: 0%"></div>
+        <div class="stat">
+          <b id="stat-progress">100%</b>
+          <small>progress</small>
         </div>
       </div>
 
-      <div class="message">
-        <strong>Apa yang harus dilakukan?</strong>
-        Upload video produktif ke YouTube, TikTok, atau Instagram untuk membuka kembali akses situs distraksi.
-      </div>
+      <div class="bar"><i id="bar-fill"></i></div>
 
       <div class="actions">
-        <a id="submit-link" href="http://localhost:3000/submit" class="btn btn-primary" target="_blank">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
-          </svg>
-          Kirim Video Produktif
+        <a class="btn btn-primary" href="http://localhost:3000/submit">
+          Kirim Video Produktif →
         </a>
-        <a id="dashboard-link" href="http://localhost:3000/dashboard" class="btn btn-outline" target="_blank">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
-          </svg>
+        <a class="btn btn-ghost" href="http://localhost:3000/dashboard">
           Buka Dashboard
         </a>
       </div>
 
-      <div class="footer">
-        UporBlock akan otomatis melepas blokir setelah video terverifikasi.
-      </div>
+      <p class="note">blokir terlepas otomatis setelah video terverifikasi</p>
     </div>
 
-    <!-- Completed State -->
-    <div id="completed-view" class="completed-view">
-      <div class="icon">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-        </svg>
+    <div class="panel" id="done">
+      <span class="stamp">TUGAS SELESAI</span>
+      <p class="sub">
+        Video kamu sudah terverifikasi. Blokir telah dilepas — sampai reset
+        berikutnya.
+      </p>
+      <div class="actions">
+        <a class="btn btn-live" href="http://localhost:3000/dashboard">
+          Buka Dashboard →
+        </a>
       </div>
-      <h1>Tugas Selesai!</h1>
-      <p class="subtitle">Video kamu sudah terverifikasi. Blokir telah dilepas.</p>
-      <a href="http://localhost:3000/dashboard" class="btn btn-primary" target="_blank" style="margin-top: 24px;">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955c.44-.439 1.152-.439 1.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
-        </svg>
-        Buka Dashboard
-      </a>
     </div>
-  </div>
+  </main>
 
-  <script src="blocked.js"></script>
+  <div class="hazard"></div>
+
+  <script>
+    function fmt(totalSeconds) {
+      var m = Math.floor(totalSeconds / 60);
+      var s = totalSeconds % 60;
+      return m + "m " + String(s).padStart(2, "0") + "s";
+    }
+
+    async function readState() {
+      try {
+        if (typeof chrome === "undefined" || !chrome.storage || !chrome.storage.local) return;
+
+        try { chrome.runtime.sendMessage({ type: "bootstrap" }); } catch (e) {}
+
+        var data = await chrome.storage.local.get(["today", "profile"]);
+        var today = data.today;
+        var profile = data.profile;
+        if (!today) return;
+
+        var threshold =
+          today.threshold_seconds ||
+          ((profile && profile.distraction_threshold_minutes) || 30) * 60;
+        var secs = today.distraction_seconds || 0;
+        var pct = Math.min(100, Math.round((secs / threshold) * 100));
+
+        document.getElementById("stat-distraksi").textContent = fmt(secs);
+        document.getElementById("stat-threshold").textContent =
+          Math.round(threshold / 60) + "m";
+        document.getElementById("stat-progress").textContent = pct + "%";
+        document.getElementById("bar-fill").style.width = pct + "%";
+
+        if (today.status === "completed") {
+          document.body.classList.add("completed");
+        } else {
+          document.body.classList.remove("completed");
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    readState();
+    setInterval(readState, 5000);
+    if (typeof chrome !== "undefined" && chrome.storage && chrome.storage.onChanged) {
+      chrome.storage.onChanged.addListener(readState);
+    }
+  </script>
 </body>
 </html>
