@@ -1,5 +1,4 @@
 import { createClient } from "@/lib/supabase/server";
-import { AppShell } from "@/components/app-shell";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { ArrowRight, Globe, History, Plug, Settings, Video } from "lucide-react";
@@ -61,7 +60,7 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <AppShell email={user!.email}>
+    <>
       <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="kicker">{"// mission control"}</p>
@@ -198,6 +197,6 @@ export default async function DashboardPage() {
           </ol>
         </CardContent>
       </Card>
-    </AppShell>
+    </>
   );
 }

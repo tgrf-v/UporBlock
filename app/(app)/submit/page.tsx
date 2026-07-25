@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { SubmitVideoForm } from "@/components/forms/submit-video-form";
-import { AppShell } from "@/components/app-shell";
 import { ArrowRight } from "lucide-react";
 
 export default async function SubmitPage() {
@@ -20,7 +19,7 @@ export default async function SubmitPage() {
     .limit(10);
 
   return (
-    <AppShell email={user.email}>
+    <>
       <div className="mb-8">
         <p className="kicker">{"// setor karya"}</p>
         <h1 className="display-xl mt-2 text-4xl sm:text-5xl">
@@ -54,6 +53,6 @@ export default async function SubmitPage() {
       <div className="max-w-2xl">
         <SubmitVideoForm submissions={submissions || []} />
       </div>
-    </AppShell>
+    </>
   );
 }

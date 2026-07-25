@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { SettingsForm } from "@/components/forms/settings-form";
-import { AppShell } from "@/components/app-shell";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Clock, Shield } from "lucide-react";
 
@@ -24,7 +23,7 @@ export default async function SettingsPage() {
   if (!profile) redirect("/dashboard");
 
   return (
-    <AppShell email={user.email}>
+    <>
       <div className="mb-8">
         <p className="kicker">{"// konfigurasi mesin"}</p>
         <h1 className="display-xl mt-2 text-4xl sm:text-5xl">PENGATURAN</h1>
@@ -68,6 +67,6 @@ export default async function SettingsPage() {
           </CardContent>
         </Card>
       </div>
-    </AppShell>
+    </>
   );
 }

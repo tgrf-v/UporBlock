@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { ConnectExtensionForm } from "@/components/forms/connect-extension-form";
-import { AppShell } from "@/components/app-shell";
 
 export const dynamic = "force-dynamic";
 
@@ -14,7 +13,7 @@ export default async function ConnectExtensionPage() {
   if (!user) redirect("/login");
 
   return (
-    <AppShell email={user.email}>
+    <>
       <div className="mb-8">
         <p className="kicker">{"// hubungkan agen"}</p>
         <h1 className="display-xl mt-2 text-4xl sm:text-5xl">EKSTENSI</h1>
@@ -43,6 +42,6 @@ export default async function ConnectExtensionPage() {
 
         <ConnectExtensionForm />
       </div>
-    </AppShell>
+    </>
   );
 }

@@ -3,7 +3,6 @@ import { redirect } from "next/navigation";
 import { StatsCard } from "@/components/history/stats-card";
 import { DailyTasksList } from "@/components/history/daily-tasks-list";
 import { SubmissionsList } from "@/components/history/submissions-list";
-import { AppShell } from "@/components/app-shell";
 import { Flame } from "lucide-react";
 
 export default async function HistoryPage() {
@@ -82,7 +81,7 @@ export default async function HistoryPage() {
   ];
 
   return (
-    <AppShell email={user.email}>
+    <>
       <div className="mb-8">
         <p className="kicker">{"// log operasi"}</p>
         <h1 className="display-xl mt-2 text-4xl sm:text-5xl">RIWAYAT</h1>
@@ -117,6 +116,6 @@ export default async function HistoryPage() {
           <SubmissionsList />
         </section>
       </div>
-    </AppShell>
+    </>
   );
 }

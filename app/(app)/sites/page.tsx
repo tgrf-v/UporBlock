@@ -2,7 +2,6 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { BlockedSitesForm } from "@/components/forms/blocked-sites-form";
 import { AllowlistsForm } from "@/components/forms/allowlists-form";
-import { AppShell } from "@/components/app-shell";
 
 export const dynamic = "force-dynamic";
 
@@ -27,7 +26,7 @@ export default async function SitesPage() {
     .order("priority", { ascending: true });
 
   return (
-    <AppShell email={user.email}>
+    <>
       <div className="mb-8">
         <p className="kicker">{"// daftar hitam & putih"}</p>
         <h1 className="display-xl mt-2 text-4xl sm:text-5xl">KELOLA SITUS</h1>
@@ -45,6 +44,6 @@ export default async function SitesPage() {
         <BlockedSitesForm sites={sites || []} />
         <AllowlistsForm allowlists={allowlists || []} />
       </div>
-    </AppShell>
+    </>
   );
 }
