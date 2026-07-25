@@ -269,7 +269,7 @@ export default function Home() {
             <Link href="/login" className="shrink-0">
               <Button
                 size="lg"
-                className="bg-ink px-8 py-6 text-base text-foreground hover:bg-ink/90"
+                className="bg-primary px-8 py-6 text-base text-primary-foreground hover:bg-primary/90"
               >
                 Aktifkan Gratis <ArrowRight className="size-5" />
               </Button>

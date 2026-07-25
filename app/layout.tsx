@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Unbounded, Space_Grotesk, JetBrains_Mono } from "next/font/google";
+import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -36,11 +37,14 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${spaceGrotesk.variable} ${unbounded.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+      className={`dark ${spaceGrotesk.variable} ${unbounded.variable} ${jetbrainsMono.variable}`}
     >
       <body className="font-sans antialiased">
-        <div aria-hidden className="glow-field" />
-        {children}
+        <ThemeProvider>
+          <div aria-hidden className="glow-field" />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

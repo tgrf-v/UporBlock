@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   History,
   LayoutDashboard,
@@ -73,6 +74,7 @@ export function AppNav({ email }: { email?: string }) {
               {email}
             </span>
           )}
+          <ThemeToggle />
           <button
             onClick={logout}
             title="Logout"
